@@ -19,5 +19,13 @@ export const createAccesToken = async (req, res) => {
     .setExpirationTime("10m")
     .encrypt(secret);
 
-  return res.cookie("accessToken", accessToken).send({ succes: true });
+  const isProduction = process.env.NODE_ENV === "production";
+
+  return res
+    .cookie("accessToken", accessToken, {
+      httpOnly: true,
+      secure: isProduction,
+      sameSite: isProduction ? "None" : "Lax",
+    })
+    .send({ succes: true });
 };
