@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import router from "./routes/router.js";
+import { connectToDB } from "./db/dbConnect.js";
 
 dotenv.config();
 
@@ -21,6 +22,8 @@ app.use(express.json());
 app.use(cookieParser());
 app.use("/apis", router);
 
-app.listen(port, () => {
-  console.log(`Server running on ${port}`);
+await connectToDB().then(() => {
+  app.listen(port, () => {
+    console.log(`Server running on ${port}`);
+  });
 });

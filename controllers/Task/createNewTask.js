@@ -15,8 +15,8 @@ export const createNewTask = async (req, res) => {
       authorUID: uid,
     });
     const task = await newTask.save();
-    return res.send({ ...task }, 200);
+    res.send({ ...task }, 200);
   } catch (err) {
-    return res.send({ error: "Something went wrong" }, 500);
+    res.send({ error: "Something went wrong" }, 500);
   }
 };
