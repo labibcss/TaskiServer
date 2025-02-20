@@ -14,10 +14,11 @@ const port = process.env.PORT;
 // Middlewares
 app.use(
   cors({
-    origin: ["http://localhost:5173"],
+    origin: process.env.CORD_ORIGIN?.split(" "),
     credentials: true,
   })
 );
+
 app.use(express.json());
 app.use(cookieParser());
 app.use("/apis", router);
