@@ -11,12 +11,10 @@ export const createAccesToken = async (req, res) => {
   const payload = {
     email: user?.email,
     uid: user?.uid,
-    exp: Math.floor(Date.now() / 1000) + 60 * 60,
   };
   const accessToken = await new EncryptJWT(payload)
     .setProtectedHeader({ alg: "dir", enc: "A256GCM" })
     .setIssuedAt()
-    .setExpirationTime("10m")
     .encrypt(secret);
 
   const isProduction = process.env.NODE_ENV === "production";
